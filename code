@@ -1,0 +1,9 @@
+如果要计算每一行的相关系数（这里行方向是基因，即行间相关系数就是基因间的相关系数），则需要对矩阵做个转置，即行列对调，使用t()命令即可，
+代码如下：
+###################
+library(pheatmap)   #加载pheatmap 包；
+data=read.table("exp_top30.original.txt",header=T,row.names=1,sep="\t")
+data=t(data)  # 对数据做转置；
+matrix=cor(data)   #计算相关系数；
+write.table(matrix,"coefficient_matrix.txt",sep="\t")            #将相关系数计算结果输出存储到你的电脑里，存储为1个txt文件；
+pheatmap(matrix,cluster_rows=F,cluster_cols=F,display_numbers=T,fontsize_number=4,number_format = "%.2f") # 注意，由于格子比较多，所以用fontsize_number定义了格子中数字的字体大小, number_format 可以控制有效小数的位数，这里是保留两位小数；
